@@ -16,11 +16,19 @@ public class ReportCard {
         mSubjectGrades = new ArrayList<Subject>();
     }
 
-    public void addGrade(String subjectName, String grade) {
+    public String getStudentName() {
+        return mStudentName;
+    }
+
+    public void setStudentName(String studentName) {
+        mStudentName = studentName;
+    }
+
+    public void addSubjectGrade(String subjectName, String grade) {
         mSubjectGrades.add(new Subject(subjectName, grade));
     }
 
-    public String getGrade(int subjectIndex) {
+    public String getSubjectGrade(int subjectIndex) {
 
         if (subjectIndex >= mSubjectGrades.size()) {
             System.err.println("Inappropriate index number entered for Report Card.");
@@ -30,15 +38,26 @@ public class ReportCard {
         return mSubjectGrades.get(subjectIndex).getGrade();
     }
 
-    public String getGrade(String subject) {
+    public String getSubjectGrade(String subject) {
         ListIterator<Subject> iterator = mSubjectGrades.listIterator();
         while (iterator.hasNext()) {
             if (iterator.next().getSubjectName().equalsIgnoreCase(subject)) {
                 return iterator.previous().getGrade();
             }
         }
-        System.err.println("Could not find in Report Card");
+        System.err.println("Could not find " + subject + " in Report Card");
         return null;
+    }
+
+    public void setSubjectGrade(String subject, String grade) {
+        ListIterator<Subject> iterator = mSubjectGrades.listIterator();
+        while (iterator.hasNext()) {
+            if (iterator.next().getSubjectName().equalsIgnoreCase(subject)) {
+                iterator.previous().setGrade(grade);
+                return;
+            }
+        }
+        System.err.println("Could not find " + subject + "in Report Card");
     }
 
     @Override
@@ -73,11 +92,14 @@ public class ReportCard {
             mSubjectName = subjectName;
         }
 
+        public void setGrade(String grade) {
+            mGrade = grade;
+        }
+
         public String getGrade() {
             return mGrade;
         }
     }//Subject class---------------------------------------
 
 }//ReportCard class
-
 
